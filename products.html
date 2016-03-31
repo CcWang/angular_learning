@@ -20,6 +20,9 @@
 				{name:"Mouse",price:"59.99"},
 				{name:"Baseketball",price:"59.99"}
 			];
+			factory.removeProduct = function(i){
+				factory.products.splice(i,1);
+			}
 			return factory;
 		})
 		myApp.controller('productsController', function($scope, productsFactory) {
@@ -30,6 +33,10 @@
 			};
 
 			$scope.getProducts(productsFactory.products);
+			$scope.removeProduct = function($index){
+				productsFactory.removeProduct($index);
+				$scope.getProducts(productsFactory.products);
+			}
 		})
 	</script>
 </head>
