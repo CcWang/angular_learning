@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app='myApp'>
+<head>
+  <title>Try Angular</title>
+   <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js'></script>
+   <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+   <script type="text/javascript">
+     var myApp = angular.module('myApp',[]);
+     myApp.controller('foodController', function ($scope) {
+       // body...
+       $scope.foodList = ['Pizza','Steak', 'Fires'];
+       $scope.addFood = function(){
+        console.log($scope.food);
+        $scope.foodList.push($scope.food);
+        $scope.food='';
+       }
+     })
+   </script>
+</head>
+<body ng-controller='foodController'>
+<div class="container">
+  <div class="row">
+    
+    <div>
+      <h3>Favorite Food</h3>
+      <input type="text" ng-model='food'></input>
+      <input type="submit" ng-click='addFood()' value="Add a food" class="btn btn-success"></input>
+      <input type="checkbox" ng-model='checked' ng-init='checked=true'></input>
+      <h3 ng-if='checked'>Currently typing <span ng-bind='food'></span></h3>
+    </div>
+    <div>
+      <h3>Food List</h3>
+      <p>Search by Name:</p>
+      <input type="text" ng-model='filterFood'></input>
+      <ul>
+        <li ng-repeat='food in foodList | filter:filterFood | orderBy:name'> {{food}}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</body>
+</html>
