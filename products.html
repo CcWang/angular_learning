@@ -15,27 +15,41 @@
 		var myApp = angular.module('myApp',[]);
 		myApp.factory('productsFactory', function(){
 			var factory = {};
+			
 			factory.products = [
 				{name:"Keyboard", price:"149.99"},
 				{name:"Mouse",price:"59.99"},
 				{name:"Baseketball",price:"59.99"}
 			];
+			
 			factory.removeProduct = function(i){
 				factory.products.splice(i,1);
+			};
+
+			factory.addProduct = function(data){
+				factory.products.push(data);
 			}
+			
 			return factory;
 		})
 		myApp.controller('productsController', function($scope, productsFactory) {
 			// body...
 			$scope.products=[];
+			
 			$scope.getProducts = function(data){
 				$scope.products=data;
 			};
 
 			$scope.getProducts(productsFactory.products);
+			
 			$scope.removeProduct = function($index){
 				productsFactory.removeProduct($index);
-				$scope.getProducts(productsFactory.products);
+				// $scope.getProducts(productsFactory.products);
+			};
+
+			$scope.addProduct = function(){
+				productsFactory.addProduct($scope.product);
+				// $scope.getProducts(productsFactory.products);
 			}
 		})
 	</script>
@@ -54,7 +68,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for='price'>Product Price</label>
 					<div class="col-sm-10">
-						<input id="price" ng-model='user.price'></input>
+						<input id="price" ng-model='product.price'></input>
 					</div>
 				</div>
 				<div class="form-group"> 
