@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html ng-app='myApp'>
+<head>
+	<title>Products</title>
+	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js'></script>
+   <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		var myApp = angular.module('myApp',[]);
+		myApp.factory('productsFactory', function(){
+			var factory = {};
+			
+			factory.products = [
+				{name:"Keyboard", price:"149.99",qty:50},
+				{name:"Mouse",price:"59.99",qty:50},
+				{name:"Baseketball",price:"59.99",qty:50}
+			];
+			
+			factory.removeProduct = function(i){
+				factory.products.splice(i,1);
+			};
+
+			factory.addProduct = function(data){
+				data.qty=50;
+				// console.log(data);
+				factory.products.push(data);
+			}
+
+			factory.buyProduct = function(i){
+				console.log(factory.products[i]);
+				if (factory.products[i].qty>1) {
+					factory.products[i].qty--;
+				}else{
+					factory.products.splice(i,1);
+				}
+			}
+			
+			return factory;
+		});
+
+		myApp.controller('productsController', function($scope, productsFactory) {
+			// body...
+			$scope.products=[];
+			
+			$scope.getProducts = function(data){
+				$scope.products=data;
+			};
+
+			$scope.getProducts(productsFactory.products);
+			
+			$scope.removeProduct = function($index){
+				productsFactory.removeProduct($index);
+				// $scope.getProducts(productsFactory.products);
+			};
+
+			$scope.addProduct = function(){
+				productsFactory.addProduct($scope.product);
+				// $scope.getProducts(productsFactory.products);
+			}
+		});
+
+		myApp.controller('ordersController', function($scope, productsFactory){
+			$scope.orders = [];
+			var getProducts = function(data){
+				$scope.orders = data;
+			};
+
+			getProducts(productsFactory.products);
+			$scope.buyProduct =function($index){
+				productsFactory.buyProduct($index);
+			}
+		});
+	</script>
+</head>
+<body>
+	<div class="container" ng-controller='productsController'>
+		<div class="row">
+			<h3 class="text-center text-primary">Add a Product</h3>
+			<form class="form-horizontal" role='form'>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for='fname'>Product Name</label>
+					<div class="col-sm-10">
+						<input id="name" ng-model='product.name'></input>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for='price'>Product Price</label>
+					<div class="col-sm-10">
+						<input id="price" ng-model='product.price'></input>
+					</div>
+				</div>
+				<div class="form-group"> 
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-default" ng-click=addProduct()>Add Product</button>
+					</div>
+				</div>
+			</form>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Price</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody ng-repeat='product in products'>
+					<tr>
+						<td>{{product.name}}</td>
+						<td>${{product.price}}</td>
+						<td><button class="btn btn-danger" ng-click=removeProduct($index)>Delete Product</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="container" ng-controller='ordersController'>
+		<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Price</th>
+						<th>Qty Available</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody ng-repeat='order in orders'>
+					<tr>
+						<td>{{order.name}}</td>
+						<td>${{order.price}}</td>
+						<td>{{order.qty}}</td>
+						<td><button class="btn btn-primary" ng-click=buyProduct($index)>Buy</button></td>
+					</tr>
+				</tbody>
+			</table>
+	</div>
+</body>
+</html>
