@@ -1,0 +1,7 @@
+{
+  "name": "Angular_Players_Temas",
+  "description": "Angular_Players_Temas, using partials",
+  "dependencies": {
+    "express": "~4.10.0"
+  }
+}
