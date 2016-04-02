@@ -1,0 +1,8 @@
+{
+  "name": "Angular_Customizing_Users",
+  "description": "Angular_Customizing_Users, using partials",
+  "dependencies": {
+    "express": "~4.10.0",
+    "body-parser":"1.14.2"
+  }
+}
