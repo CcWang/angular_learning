@@ -23,7 +23,10 @@ myApp.factory('userFactory', function(){
 
 	return factory;
 })
-myApp.controller('listController', function($scope){
-	$scope.message = 'We are using another controller';
-   
+myApp.controller('listController', function($scope, userFactory){
+	$scope.users;
+   	$scope.getUsers = function(data){
+   		$scope.users = data;
+   	};
+   	$scope.getUsers(userFactory.users);
 })
