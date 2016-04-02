@@ -9,6 +9,6 @@ app.get('/', function (req,res) {
 	res.render('./client/static/index.html');
 })
 
-app.listen(8899.function(){
+app.listen(8899,function(){
 	console.log('listening on 8899, players and teams');
 })
