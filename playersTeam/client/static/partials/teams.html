@@ -1,3 +1,31 @@
-<div class="col-sm-12">
-	
+<div class="col-sm-12" ng-controller='teamController'>
+	<form class="form-inline" role='form'>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for='name'>Name</label>
+			<div class="col-sm-10">
+				<input id="name" ng-model='team'></input>
+			</div>
+		</div>
+		<div class="form-group"> 
+			<div class="col-sm-offset-2 col-sm-10">
+				<button type="submit" class="btn btn-primary" ng-click=addTeam()>Add New Team</button>
+			</div>
+		</div>
+	</form>
+	<hr>
+	<table class="table table-striped">
+		<thead>
+		<tr>
+			<th>Team Name</th>
+			<th>Actions</th>
+		</tr>
+		</thead>
+		<tbody ng-repeat='t in teams'>
+		<tr>
+		<td>{{t}}</td>
+		
+		<td><button class="btn btn-danger" ng-click=removeTeam($index)>Remove Team</button></td>
+		</tr>
+		</tbody>
+		</table>
 </div>

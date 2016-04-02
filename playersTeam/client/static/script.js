@@ -36,6 +36,16 @@ myApp.factory('playerFactory', function(){
 myApp.factory('teamFactory',function(){
 	var factory={}
 
+	factory.teams = ['Seahawks','49ers','Honeybadgers'];
+
+	factory.addTeam = function(data){
+		factory.teams.push(data);
+	}
+
+	factory.removeTeam = function(i){
+		factory.teams.splice(i,1);
+	}
+
 	return factory;
 })
 
@@ -53,5 +63,22 @@ myApp.controller('playerController', function($scope,playerFactory){
 	$scope.addPlayer = function(){
 		playerFactory.addPlayer($scope.player);
 		$scope.player='';
+	}
+})
+
+myApp.controller('teamController', function($scope,teamFactory){
+	$scope.teams;
+
+	$scope.getTeams = function(data){
+		$scope.teams = data;
+	}
+
+	$scope.getTeams(teamFactory.teams);
+	$scope.removeTeam = function($index){
+		teamFactory.removeTeam($index);
+	}
+	$scope.addTeam = function(){
+		teamFactory.addTeam($scope.team);
+		$scope.team='';
 	}
 })
