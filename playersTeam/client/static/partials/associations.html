@@ -1,3 +1,43 @@
-<div class="col-sm-12">
-	
+<div class="col-sm-12" ng-controller='assController'>
+	<form class="form-horizontal" role='form'>
+		<div class="form-group">
+			<label for="sel1" class="control-label col-sm-2">Player List:</label>
+			<div class="col-sm-10">
+				<select class="form-control" id="sel1" ng-options='p for p in players' ng-model='selectedP' ng-change = 'getPlayer(selectedP)'>
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="sel1" class="control-label col-sm-2">Team List:</label>
+			<div class="col-sm-10">
+				<select class="form-control" id="sel1" ng-options='t for t in teams' ng-model='selectedT' ng-change = 'getTeam(selectedT)'>
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group"> 
+		  <div class="col-sm-offset-2 col-sm-10">
+		    <button type="submit" class="btn btn-primary" ng-click='assign(getPlayer(selectedP),getTeam(selectedT))'>Assign Player to Team</button>
+		  </div>
+		</div>
+
+	</form>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Player Name</th>
+				<th>Team</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody ng-repeat='a in associations'>
+			<tr>
+			<td>{{a.player}}</td>
+			<td>{{a.team}}</td>
+			<td><button class="btn btn-danger" ng-click=clear($index)>Clear Assignment</button></td>
+			</tr>
+		</tbody>
+	</table>
 </div>

@@ -17,7 +17,9 @@ myApp.config(function ($routeProvider) {
 
 })
 
-myApp.factory('playerFactory', function(){
+myApp.factory('playerFactory', 
+	function(){
+
 	var factory={}
 
 	factory.players =["Speros","Jimmy","Jay"];
@@ -33,10 +35,14 @@ myApp.factory('playerFactory', function(){
 	return factory;
 })
 
-myApp.factory('teamFactory',function(){
+myApp.factory('teamFactory',
+	function(){
+
 	var factory={}
 
 	factory.teams = ['Seahawks','49ers','Honeybadgers'];
+
+	factory.associations = [];
 
 	factory.addTeam = function(data){
 		factory.teams.push(data);
@@ -46,7 +52,55 @@ myApp.factory('teamFactory',function(){
 		factory.teams.splice(i,1);
 	}
 
+	factory.setAssocations = function(data){
+		factory.associations.push(data);
+	}
+
+	factory.clearAssocations = function(i){
+		factory.associations.splice(i,1);
+	}
 	return factory;
+})
+
+myApp.controller('assController', function($scope,playerFactory,teamFactory){
+
+	$scope.getPlayers = function(data){
+		$scope.players = data;
+	}
+
+	$scope.getPlayers(playerFactory.players);
+
+	$scope.getTeams = function(data){
+		$scope.teams = data;
+	}
+	$scope.getAssociations = function(data){
+		$scope.associations = data;
+	}
+
+	$scope.getAssociations(teamFactory.associations);
+
+
+	$scope.getTeams(teamFactory.teams);
+	$scope.getPlayer =function(data){
+		var player = data;
+		return player;
+	};
+
+	$scope.getTeam = function(data){
+		var team = data;
+		return team;
+	}
+
+	$scope.assign = function(a,b){
+		var association = {player:a,team:b}
+		teamFactory.setAssocations(association);
+			$scope.selectedP = '';
+			$scope.selectedT = '';
+	};
+
+	$scope.clear = function($index){
+		teamFactory.clearAssocations($index);
+	}
 })
 
 myApp.controller('playerController', function($scope,playerFactory){
